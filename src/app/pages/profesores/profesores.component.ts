@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GradosService } from 'src/app/services/grados.service';
 import { ProfesoresService } from 'src/app/services/profesores.service';
 import Swal from 'sweetalert2';
 
@@ -22,7 +23,8 @@ export class ProfesoresComponent implements OnInit {
     Apellidos: '',
     Genero: '',
   }
-  constructor( public profesores: ProfesoresService ) { }
+  constructor( public profesores: ProfesoresService,
+               public grados: GradosService ) { }
 
   ngOnInit(): void {
     Swal.showLoading()
@@ -55,9 +57,9 @@ export class ProfesoresComponent implements OnInit {
     } else {
       this.profesores.postProfesor(this.profesor).subscribe( r => {
         Swal.fire({
-          title: 'El profesor',
-          text: 'fue creado con exito',
-          icon: 'success',
+          title: r.msg,
+          text: '',
+          icon: 'info',
           showConfirmButton: true,
           showCancelButton: false,
           allowOutsideClick: false
@@ -84,11 +86,11 @@ export class ProfesoresComponent implements OnInit {
     }). then ( resp => {
       if ( resp.value) {
 
-        this.profesores.delProfesor(id).subscribe( () => {
+        this.profesores.delProfesor(id).subscribe( (r) => {
           Swal.fire({
-            title: 'El profesor',
-            text: 'fue eliminado con exito',
-            icon: 'success',
+            title: r.msg,
+            text: '',
+            icon: 'info',
             showConfirmButton: true,
             showCancelButton: false,
             allowOutsideClick: false
@@ -108,9 +110,9 @@ export class ProfesoresComponent implements OnInit {
     } else {
       this.profesores.putProfesor(this.profesormod).subscribe( r => {
         Swal.fire({
-          title: 'El profesor',
-          text: 'fue modificado con exito',
-          icon: 'success',
+          title: r.msg,
+          text: '',
+          icon: 'info',
           showConfirmButton: true,
           showCancelButton: false,
           allowOutsideClick: false

@@ -60,10 +60,11 @@ export class AlumnosComponent implements OnInit {
       Swal.fire('Todos los campos son requeridos','','warning')
     } else {
       this.alumnos.postAlumno(this.alumno).subscribe( r => {
+        
         Swal.fire({
-          title: 'El alumno',
-          text: 'fue creado con exito',
-          icon: 'success',
+          title: r.msg,
+          text: '',
+          icon: 'info',
           showConfirmButton: true,
           showCancelButton: false,
           allowOutsideClick: false
@@ -90,11 +91,12 @@ export class AlumnosComponent implements OnInit {
     }). then ( resp => {
       if ( resp.value) {
 
-        this.alumnos.delAlumno(id).subscribe( () => {
+        this.alumnos.delAlumno(id).subscribe( (r) => {
+          
           Swal.fire({
-            title: 'El alumno',
-            text: 'fue eliminado con exito',
-            icon: 'success',
+            title: r.msg,
+            text: '',
+            icon: 'info',
             showConfirmButton: true,
             showCancelButton: false,
             allowOutsideClick: false
@@ -113,10 +115,11 @@ export class AlumnosComponent implements OnInit {
       Swal.fire('Todos los campos son requeridos','','warning')
     } else {
       this.alumnos.putAlumno(this.alumnomod).subscribe( r => {
+        
         Swal.fire({
-          title: 'El alumno',
-          text: 'fue modificado con exito',
-          icon: 'success',
+          title: r.msg,
+          text: '',
+          icon: 'info',
           showConfirmButton: true,
           showCancelButton: false,
           allowOutsideClick: false

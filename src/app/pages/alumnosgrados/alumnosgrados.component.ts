@@ -85,9 +85,9 @@ export class AlumnosgradosComponent implements OnInit {
     } else {
       this.alumnosgrados.postAlumnoGrado(this.alumnogrado).subscribe( r => {
         Swal.fire({
-          title: 'El Alumnogrado',
-          text: 'fue creado con exito',
-          icon: 'success',
+          title: r.msg,
+          text: '',
+          icon: 'info',
           showConfirmButton: true,
           showCancelButton: false,
           allowOutsideClick: false
@@ -114,11 +114,11 @@ export class AlumnosgradosComponent implements OnInit {
     }). then ( resp => {
       if ( resp.value) {
 
-        this.alumnosgrados.delAlumnoGrado(id).subscribe( () => {
+        this.alumnosgrados.delAlumnoGrado(id).subscribe( (r) => {
           Swal.fire({
-            title: 'El Alumnogrado',
-            text: 'fue eliminado con exito',
-            icon: 'success',
+            title: r.msg,
+            text: '',
+            icon: 'info',
             showConfirmButton: true,
             showCancelButton: false,
             allowOutsideClick: false
@@ -139,9 +139,9 @@ export class AlumnosgradosComponent implements OnInit {
     } else {
       this.alumnosgrados.putAlumnoGrado(this.alumnogradomod).subscribe( r => {
         Swal.fire({
-          title: 'El Alumno grado',
-          text: 'fue modificado con exito',
-          icon: 'success',
+          title: r.msg,
+          text: '',
+          icon: 'info',
           showConfirmButton: true,
           showCancelButton: false,
           allowOutsideClick: false

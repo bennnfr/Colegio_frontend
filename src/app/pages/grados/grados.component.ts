@@ -29,8 +29,8 @@ export class GradosComponent implements OnInit {
 
   ngOnInit(): void {
     Swal.showLoading()
-    this.grados.getGrados().subscribe( r => { 
-      this.gradosinfo = r
+    this.grados.getGrados().subscribe( r => {
+    this.gradosinfo = r
     Swal.close()
     } );
   }
@@ -68,9 +68,9 @@ export class GradosComponent implements OnInit {
     } else {
       this.grados.postGrado(this.grado).subscribe( r => {
         Swal.fire({
-          title: 'El grado',
-          text: 'fue creado con exito',
-          icon: 'success',
+          title: r.msg,
+          text: '',
+          icon: 'info',
           showConfirmButton: true,
           showCancelButton: false,
           allowOutsideClick: false
@@ -87,6 +87,7 @@ export class GradosComponent implements OnInit {
 
   delGrado(id: string) {
     
+    
     Swal.fire({
       title: 'Desea Eliminar el grado',
       text: 'Seleccionado',
@@ -97,11 +98,11 @@ export class GradosComponent implements OnInit {
     }). then ( resp => {
       if ( resp.value) {
 
-        this.grados.delGrado(id).subscribe( () => {
+        this.grados.delGrado(id).subscribe( (r) => {
           Swal.fire({
-            title: 'El grado',
-            text: 'fue eliminado con exito',
-            icon: 'success',
+            title: r.msg,
+            text: '',
+            icon: 'info',
             showConfirmButton: true,
             showCancelButton: false,
             allowOutsideClick: false
@@ -122,9 +123,9 @@ export class GradosComponent implements OnInit {
     } else {
       this.grados.putGrado(this.gradomod).subscribe( r => {
         Swal.fire({
-          title: 'El grado',
-          text: 'fue modificado con exito',
-          icon: 'success',
+          title: r.msg,
+          text: '',
+          icon: 'info',
           showConfirmButton: true,
           showCancelButton: false,
           allowOutsideClick: false
