@@ -1,0 +1,150 @@
+<div class="card border-secondary mb-3 animate__animated animate__fadeIn" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+    <div class="card-body">
+        <h5 class="card-title">Alumnos Grados</h5>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">AlumnoId</th>
+                    <th scope="col">Nombre Alumno</th>
+                    <th scope="col">GradoId</th>
+                    <th scope="col">Nombre Grado</th>
+                    <th scope="col">Seccion</th>
+                    <th scope="col">Herramientas</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of alumnosgradosinfo">
+                    <th>{{item._id}}</th>
+                    <td>{{item.AlumnoId}}</td>
+                    <td>{{item.NombreAlumno}}</td>
+                    <td>{{item.GradoId}}</td>
+                    <td>{{item.NombreGrado}}</td>
+                    <td>{{item.Seccion}}</td>
+                    <td>
+                        <button (click)="showmod(item)" title="Editar profesor" class="btn btn-outline-success"><span class="material-icons">edit</span></button>
+                        <button (click)="delAlumnoGrado(item._id)" title="Eliminar profesor" class="btn btn-outline-danger ml-5"><span class="material-icons">delete</span></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="col">
+                <button (click)="show()" title="Agregar Alumno grado" class="btn btn-info mb-2">Agregar Alumno grado</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--POPUPS-->
+<div [style.display]="showModal ? 'block' : 'none'" class="modal" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="card">
+        <div class="card-body animated fadeIn">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Agregar alumno grado</h4>
+            </div>
+            <div class="modal-body">
+                <form (ngSubmit)="postAlumnoGrado()">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group m-t-20">
+                                <div class="col-xs-6">
+                                    <span style="font-weight:bold">Seccion *</span>
+                                    <input id="dpdocument_typep" class="form-control" type="text" [(ngModel)]="alumnogrado.Seccion" [ngModelOptions]="{standalone: true}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group m-t-20">
+                                <div class="col-xs-6">
+                                    <span style="font-weight:bold">Alumno *</span>
+                                    <!--  <input id="dpdescriptionp" class="form-control" type="text" [(ngModel)]="grado.ProfesorId" [ngModelOptions]="{standalone: true}"> -->
+                                    <select class="form-select" [(ngModel)]="alumnogrado.AlumnoId" [ngModelOptions]="{standalone: true}">
+                                        <option *ngFor="let item of alumnosgradoinfo" value="{{item._id}}">{{item.Nombre}}</option>
+                                      </select>
+                                    <span style="font-weight:bold" class="mt-3">AlumnoId *</span>
+                                    <input id="dpdescriptionp" class="form-control" type="text" [readonly]="true" [(ngModel)]="alumnogrado.AlumnoId" [ngModelOptions]="{standalone: true}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group m-t-20">
+                                <div class="col-xs-6">
+                                    <span style="font-weight:bold">Grado *</span>
+                                    <!--  <input id="dpdescriptionp" class="form-control" type="text" [(ngModel)]="grado.ProfesorId" [ngModelOptions]="{standalone: true}"> -->
+                                    <select class="form-select" [(ngModel)]="alumnogrado.GradoId" [ngModelOptions]="{standalone: true}">
+                                        <option *ngFor="let item of gradoinfo" value="{{item._id}}">{{item.Nombre}}</option>
+                                      </select>
+                                    <span style="font-weight:bold" class="mt-3">GradoId *</span>
+                                    <input id="dpdescriptionp" class="form-control" type="text" [readonly]="true" [(ngModel)]="alumnogrado.GradoId" [ngModelOptions]="{standalone: true}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-outline-info">GUARDAR</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark" data-dismiss="modal" (click)="hide()">CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div [style.display]="showModalmod ? 'block' : 'none'" class="modal" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="card">
+        <div class="card-body animated fadeIn">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Modificar Alumno Grado</h4>
+            </div>
+            <div class="modal-body">
+                <form (ngSubmit)="putAlumnoGrado()">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group m-t-20">
+                                <div class="col-xs-6">
+                                    <span style="font-weight:bold">Seccion *</span>
+                                    <input id="dpdocument_typep" class="form-control" type="text" [(ngModel)]="alumnogradomod.Seccion" [ngModelOptions]="{standalone: true}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group m-t-20">
+
+                            </div>
+                            <div class="col-xs-6">
+                                <span style="font-weight:bold">Alumno *</span>
+                                <!--  <input id="dpdescriptionp" class="form-control" type="text" [(ngModel)]="grado.ProfesorId" [ngModelOptions]="{standalone: true}"> -->
+                                <select class="form-select" [(ngModel)]="alumnogradomod.AlumnoId" [ngModelOptions]="{standalone: true}">
+                                    <option *ngFor="let item of alumnosgradosinfomod" value="{{item._id}}" >{{item.Nombre}}</option>
+                                  </select>
+                                <div class="col-xs-6">
+                                    <span style="font-weight:bold" class="mt-3">AlumnoId *</span>
+                                    <input id="dpdescriptionp" class="form-control" type="text" [readonly]="true" [(ngModel)]="alumnogradomod.AlumnoId" [ngModelOptions]="{standalone: true}">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col">
+                            <div class="form-group m-t-20">
+                                <div class="col-xs-6">
+                                    <span style="font-weight:bold">Grado *</span>
+                                    <!--  <input id="dpdescriptionp" class="form-control" type="text" [(ngModel)]="grado.ProfesorId" [ngModelOptions]="{standalone: true}"> -->
+                                    <select class="form-select" [(ngModel)]="alumnogradomod.GradoId" [ngModelOptions]="{standalone: true}">
+                                        <option *ngFor="let item of gradosinfomod" value="{{item._id}}">{{item.Nombre}}</option>
+                                      </select>
+                                    <span style="font-weight:bold" class="mt-3">GradoId *</span>
+                                    <input id="dpdescriptionp" class="form-control" type="text" [readonly]="true" [(ngModel)]="alumnogradomod.GradoId" [ngModelOptions]="{standalone: true}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-outline-info">GUARDAR</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark" data-dismiss="modal" (click)="hidemod()">CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>
